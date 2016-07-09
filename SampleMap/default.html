@@ -24,7 +24,15 @@
             function initialize() {
                 var mapOptions = {
                     center: new google.maps.LatLng(38.535276, 35.040894),
-                    zoom: 7
+                    zoom: 7,
+                    disableDefaultUI: true,
+                    zoomControl: true,
+                    panControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    rotateControl: true,
+                    overviewMapControl: true
                 };
                 var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
             }
