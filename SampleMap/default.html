@@ -40,6 +40,7 @@
                 //addPolyline(map);
                 //addPolygon(map);
                 //addCircle(map);
+                //addRectangle(map);
             }
 
             function addMarker(map) {
@@ -101,6 +102,21 @@
                     strokeOpacity: 0.8,
                     strokeWeight: 4,
                     radius: 1000,
+                    map: map
+                });
+            }
+
+            function addRectangle(map) {
+                var rectangle = new google.maps.Rectangle({
+                    bounds: new google.maps.LatLngBounds(
+                        new google.maps.LatLng(41.029264, 29.095723),
+                        new google.maps.LatLng(41.031927, 29.112089)
+                        ),
+                    fillColor: "black",
+                    fillOpacity: 0.6,
+                    strokeColor: "white",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 4,
                     map: map
                 });
             }
