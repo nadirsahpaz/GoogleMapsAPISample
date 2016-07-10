@@ -35,6 +35,19 @@
                     overviewMapControl: true
                 };
                 var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
+
+                //addMarker(map);
+
+            }
+
+            function addMarker(map) {
+                var centerMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(36.990682, 35.335478),
+                    map: map,
+                    title: "Capital Of Kebap"
+                });
+
+                centerMarker.setMap(map);
             }
 
 
