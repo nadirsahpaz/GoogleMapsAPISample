@@ -39,6 +39,7 @@
                 //addMarker(map);
                 //addPolyline(map);
                 //addPolygon(map);
+                //addCircle(map);
             }
 
             function addMarker(map) {
@@ -89,6 +90,19 @@
                 });
 
                 interlandArea.setMap(map);
+            }
+
+            function addCircle(map) {
+                var circle = new google.maps.Circle({
+                    center: new google.maps.LatLng(41.031927, 29.112089),
+                    fillColor: "black",
+                    fillOpacity: 0.6,
+                    strokeColor: "white",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 4,
+                    radius: 1000,
+                    map: map
+                });
             }
 
 
