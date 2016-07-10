@@ -38,7 +38,7 @@
 
                 //addMarker(map);
                 //addPolyline(map);
-
+                //addPolygon(map);
             }
 
             function addMarker(map) {
@@ -70,6 +70,25 @@
                 });
 
                 pathToCenter.setMap(map);
+            }
+
+            function addPolygon(map) {
+                var interlandCoors = [
+                    new google.maps.LatLng(41.032051, 28.965605),
+                    new google.maps.LatLng(41.022615, 28.977613),
+                    new google.maps.LatLng(41.049222, 29.030230),
+                    new google.maps.LatLng(41.060917, 29.015888)
+                ];
+                var interlandArea = new google.maps.Polygon({
+                    path: interlandCoors,
+                    strokeColor: "black",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 4,
+                    fillColor: "#00FF00",
+                    fillOpacity: 0.6
+                });
+
+                interlandArea.setMap(map);
             }
 
 
