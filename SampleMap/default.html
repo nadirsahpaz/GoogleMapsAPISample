@@ -37,6 +37,7 @@
                 var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
 
                 //addMarker(map);
+                //addPolyline(map);
 
             }
 
@@ -48,6 +49,27 @@
                 });
 
                 centerMarker.setMap(map);
+            }
+
+            function addPolyline(map) {
+                var pathCoordinates = [
+                    new google.maps.LatLng(41.030272, 29.121061),
+                    new google.maps.LatLng(40.997406, 29.120333),
+                    new google.maps.LatLng(40.983759, 29.203896),
+                    new google.maps.LatLng(40.956977, 29.222754),
+                    new google.maps.LatLng(40.930021, 29.206533),
+                    new google.maps.LatLng(40.906242, 29.210858),
+                    new google.maps.LatLng(40.888516, 29.238013),
+                    new google.maps.LatLng(40.893589, 29.244121)
+                ];
+                var pathToCenter = new google.maps.Polyline({
+                    path: pathCoordinates,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 4
+                });
+
+                pathToCenter.setMap(map);
             }
 
 
