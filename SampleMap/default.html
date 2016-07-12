@@ -39,9 +39,10 @@
                 addMarker(map);
                 addPolyline(map);
                 addPolygon(map);
-                addCircle(map);
-                addRectangle(map);
-                addKmlLayer(map);
+                //addCircle(map);
+                //addRectangle(map);
+                //addKmlLayer(map);
+                addGeoJSONDataLayer(map);
             }
 
             function addMarker(map) {
@@ -77,16 +78,24 @@
 
             function addPolygon(map) {
                 var interlandCoors = [
-                    new google.maps.LatLng(41.032051, 28.965605),
-                    new google.maps.LatLng(41.022615, 28.977613),
-                    new google.maps.LatLng(41.049222, 29.030230),
-                    new google.maps.LatLng(41.060917, 29.015888)
+                    new google.maps.LatLng(41.040307, 28.940870),
+                    new google.maps.LatLng(41.034456, 28.938114),
+                    new google.maps.LatLng(41.019441, 28.923519),
+                    new google.maps.LatLng(40.988860, 28.919333), // southeast corner 
+                    new google.maps.LatLng(41.001957, 28.936991),
+                    new google.maps.LatLng(41.001495, 28.945973),
+                    new google.maps.LatLng(41.003883, 28.955670),
+                    new google.maps.LatLng(41.002342, 28.979452),
+                    new google.maps.LatLng(41.009506, 28.986903),
+                    new google.maps.LatLng(41.017361, 28.985883),
+                    new google.maps.LatLng(41.018209, 28.971491),
+                    new google.maps.LatLng(41.037998, 28.945157)
                 ];
                 var interlandArea = new google.maps.Polygon({
                     path: interlandCoors,
                     strokeColor: "black",
                     strokeOpacity: 0.8,
-                    strokeWeight: 4,
+                    strokeWeight: 1,
                     fillColor: "#00FF00",
                     fillOpacity: 0.6
                 });
@@ -132,6 +141,102 @@
                 //kmlLayer = null;
             }
 
+            function addGeoJSONDataLayer(map) {
+                var tempObject = {
+                    "type": "FeatureCollection",
+                    "features": [
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Ankara Sube",
+                                "description": "Ankara Sube - Ankara"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    35.08,
+                                    39.31
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Merkez Sube",
+                                "description": "Genel Md. Merkez Sube - Istanbul"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    29.11,
+                                    41.03
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Vodafone Arena Mabed Sube",
+                                "description": "Vodafone Arena Mabed Sube - Istanbul"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    28.99,
+                                    41.03
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Izmir Sube",
+                                "description": "Izmir Sube - Izmir"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    27.13,
+                                    38.40
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Lara Sube",
+                                "description": "Lara Sube - Antalya"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    30.79,
+                                    36.85
+                                ]
+                            }
+                        }
+
+
+
+                    ]
+                };
+
+                map.data.addGeoJson(tempObject);
+
+                //map.data.loadGeoJson('http://localhost/Albaraka.GoogleMapsAPI/SampleMap/Google.txt');
+                // https://storage.googleapis.com/maps-devrel/google.json
+
+                map.data.setStyle({
+                    icon: 'http://localhost/Albaraka.GoogleMapsAPI/SampleMap/albarakaIcon.png'
+                });
+
+                //map.data. loadGeoJson('http://localhost/SampleMap/BranchesKmlLayer.json');
+
+                //map.data.setStyle({
+                //    icon: 'http://localhost/SampleMap/BranchFlag.png',
+                //    strokeColor: 'green'
+                //});
+            }
 
             google.maps.event.addDomListener(window, "load", initialize);
     </script>
