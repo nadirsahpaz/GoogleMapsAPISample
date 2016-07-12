@@ -41,6 +41,7 @@
                 addPolygon(map);
                 addCircle(map);
                 addRectangle(map);
+                addKmlLayer(map);
             }
 
             function addMarker(map) {
@@ -119,6 +120,16 @@
                     strokeWeight: 4,
                     map: map
                 });
+            }
+
+            function addKmlLayer(map) {
+
+                var offasDykeLayer = new google.maps.KmlLayer("http://hikeview.co.uk/tracks/hikeview-offas-dyke.kml");
+                offasDykeLayer.setMap(map);
+
+                /* to Remove KmlLayer */
+                //kmlLayer.setMap(null);
+                //kmlLayer = null;
             }
 
 
