@@ -49,7 +49,7 @@
             }
 
             function addMarker(map) {
-                var image = "http://localhost/SampleMap/Icon/kebabIcon32x32.png";
+                var image = "http://nadirsahpaz.azurewebsites.net/Icon/kebabIcon32x32.png";
 
                 var centerMarker = new google.maps.Marker({
                     icon: image,
@@ -168,7 +168,7 @@
 
             function addGeoJSONDataLayer(map) {
 
-                map.data.loadGeoJson('http://localhost/SampleMap/Json/branches.json');
+                map.data.loadGeoJson('http://nadirsahpaz.azurewebsites.net/Json/branches.json');
                 // https://storage.googleapis.com/maps-devrel/google.json
 
                 // When the user clicks, open an infowindow
@@ -184,7 +184,7 @@
 
 
                 map.data.setStyle({
-                    icon: 'http://localhost/SampleMap/Icon/pin_turuncu_32x32.png'
+                    icon: 'http://nadirsahpaz.azurewebsites.net/Icon/pin_turuncu_32x32.png'
                 });
             }
 
