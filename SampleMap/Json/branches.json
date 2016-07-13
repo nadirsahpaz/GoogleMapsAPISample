@@ -7,9 +7,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
-                "description": "Bursa Iskender Sube",
-                "name": "Bursa Iskender Sube"
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "description": "Iskender Sube",
+                "name": "Iskender Sube",
+                "city": "BURSA"
             },
             "geometry": {
                 "type": "Point",
@@ -25,9 +26,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
-                "description": "Merkez Sube - Umraniye/Istanbul",
-                "name": "Merkez Sube - Umraniye/Istanbul"
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "description": "Merkez Sube",
+                "name": "Merkez Sube",
+                "city": "ISTANBUL"
             },
             "geometry": {
                 "type": "Point",
@@ -43,9 +45,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
-                "description": "Vodafone Arena Karakartal Sube - Besiktas",
-                "name": "Vodafone Arena Karakartal Sube - Besiktas"
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "description": "Vodafone Arena Karakartal Sube",
+                "name": "Vodafone Arena Karakartal Sube",
+                "city": "ISTANBUL"
             },
             "geometry": {
                 "type": "Point",
@@ -61,9 +64,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
-                "description": "Izmir Sube - Izmir",
-                "name": "Izmir Sube - Izmir"
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "description": "Izmir Sube",
+                "name": "Izmir Sube",
+                "city": "IZMIR"
             },
             "geometry": {
                 "type": "Point",
@@ -79,9 +83,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
-                "description": "Lara Sube - Antalya",
-                "name": "Lara Sube - Antalya"
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "description": "Lara Sube",
+                "name": "Lara Sube",
+                "city": "ANTALYA"
             },
             "geometry": {
                 "type": "Point",
@@ -97,9 +102,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
                 "description": "Beyazit Sube",
-                "name": "Beyazit Sube"
+                "name": "Beyazit Sube",
+                "city": "ISTANBUL"
             },
             "geometry": {
                 "type": "Point",
@@ -115,9 +121,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
                 "description": "Angara Sube",
-                "name": "Angara Sube"
+                "name": "Angara Sube",
+                "city": "ANKARA"
             },
             "geometry": {
                 "type": "Point",
@@ -133,9 +140,10 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
                 "description": "Bafra Pide Sube",
-                "name": "Bafra Pide Sube"
+                "name": "Bafra Pide Sube",
+                "city": "SAMSUN"
             },
             "geometry": {
                 "type": "Point",
@@ -153,7 +161,8 @@
                 "marker-symbol": "",
                 "icon": "http://localhost/SampleMap/Icon/home_32x32.png",
                 "description": "Benim Ev :) Sube degil",
-                "name": "Benim Ev :) Sube degil"
+                "name": "Benim Ev :) Sube degil",
+                "city": "ISTANBUL"
             },
             "geometry": {
                 "type": "Point",
