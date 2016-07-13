@@ -1,0 +1,167 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Bursa Iskender Sube",
+                "name": "Bursa Iskender Sube"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    29.09,
+                    40.19
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Merkez Sube - Umraniye/Istanbul",
+                "name": "Merkez Sube - Umraniye/Istanbul"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    29.11,
+                    41.03
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Vodafone Arena Karakartal Sube - Besiktas",
+                "name": "Vodafone Arena Karakartal Sube - Besiktas"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    28.99,
+                    41.03
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Izmir Sube - Izmir",
+                "name": "Izmir Sube - Izmir"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    27.13,
+                    38.40
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Lara Sube - Antalya",
+                "name": "Lara Sube - Antalya"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.79,
+                    36.85
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Beyazit Sube",
+                "name": "Beyazit Sube"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    28.966620,
+                    41.009318
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Angara Sube",
+                "name": "Angara Sube"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    32.87,
+                    39.94
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/pin_turuncu_32x32.png",
+                "description": "Bafra Pide Sube",
+                "name": "Bafra Pide Sube"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    35.84,
+                    41.57
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "marker-color": "#7e7e7e",
+                "marker-size": "medium",
+                "marker-symbol": "",
+                "icon": "http://localhost/SampleMap/Icon/home_32x32.png",
+                "description": "Benim Ev :) Sube degil",
+                "name": "Benim Ev :) Sube degil"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    29.244835,
+                    40.895000
+                ]
+            }
+        }
+    ]
+}
