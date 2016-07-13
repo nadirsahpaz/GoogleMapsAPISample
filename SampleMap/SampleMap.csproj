@@ -70,11 +70,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="albarakaIcon.png" />
+    <Content Include="Icon\branchIcon32x32.png" />
     <Content Include="default.html" />
+    <Content Include="Icon\home_32x32.png" />
+    <Content Include="Icon\kebabIcon.png" />
+    <Content Include="Icon\kebabIcon32x32.png" />
+    <Content Include="Icon\pin_turuncu_32x32.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Json\branches.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
