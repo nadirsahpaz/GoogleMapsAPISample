@@ -76,6 +76,7 @@
     <Content Include="Icon\kebabIcon.png" />
     <Content Include="Icon\kebabIcon32x32.png" />
     <Content Include="Icon\pin_turuncu_32x32.png" />
+    <Content Include="Script\google-maps-3-vs-1-0.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

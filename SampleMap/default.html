@@ -19,10 +19,13 @@
         }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCHpcFRqfDZMmOith5v8YT64CGMwgKtX4"></script>
+    <script type="text/javascript" src="Script/google-maps-3-vs-1-0.js"></script>
     <script type="text/javascript">
 
         // global variables
         var InfoWindow = new google.maps.InfoWindow();
+        var LocalHostName = 'localhost/SampleMap';
+        var PublicHostName = 'nadirsahpaz.azurewebsites.net';
 
             function initialize() {
                 var mapOptions = {
@@ -38,18 +41,21 @@
                     overviewMapControl: true
                 };
                 var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
+                var initialCenter = mapOptions.center;
+                var initialZoom = mapOptions.zoom;
 
                 addMarker(map);
                 addPolyline(map);
                 addPolygon(map);
                 //addCircle(map);
                 //addRectangle(map);
-                //addKmlLayer(map);
+                addKmlLayer(map);
                 addGeoJSONDataLayer(map);
+                addGoToInitialExtent(map, initialCenter, initialZoom);
             }
 
             function addMarker(map) {
-                var image = "http://nadirsahpaz.azurewebsites.net/Icon/kebabIcon32x32.png";
+                var image = "http://" + LocalHostName + "/Icon/kebabIcon32x32.png";
 
                 var centerMarker = new google.maps.Marker({
                     icon: image,
@@ -158,8 +164,11 @@
 
             function addKmlLayer(map) {
 
-                var offasDykeLayer = new google.maps.KmlLayer("http://hikeview.co.uk/tracks/hikeview-offas-dyke.kml");
-                offasDykeLayer.setMap(map);
+                var interlandLayer = new google.maps.KmlLayer({
+                    url: 'https://dl.dropboxusercontent.com/u/70378149/Interland01.kml',
+                    preserveViewport: true
+                });
+                interlandLayer.setMap(map);
 
                 /* to Remove KmlLayer */
                 //kmlLayer.setMap(null);
@@ -168,7 +177,7 @@
 
             function addGeoJSONDataLayer(map) {
 
-                map.data.loadGeoJson('http://nadirsahpaz.azurewebsites.net/Json/branches.json');
+                map.data.loadGeoJson('http://' + LocalHostName + '/Json/branches.json');
                 // https://storage.googleapis.com/maps-devrel/google.json
 
                 // When the user clicks, open an infowindow
@@ -200,7 +209,14 @@
 
 
                 map.data.setStyle({
-                    icon: 'http://nadirsahpaz.azurewebsites.net/Icon/pin_turuncu_32x32.png'
+                    icon: 'http://' + LocalHostName + '/Icon/pin_turuncu_32x32.png'
+                });
+            }
+
+            function addGoToInitialExtent(map, initialCenter, initialZoom) {
+                google.maps.event.addListener(map, 'rightclick', function () {
+                    map.setCenter(initialCenter);
+                    map.setZoom(initialZoom);
                 });
             }
 
