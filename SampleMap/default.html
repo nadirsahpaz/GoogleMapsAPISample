@@ -55,7 +55,7 @@
             }
 
             function addMarker(map) {
-                var image = "http://" + LocalHostName + "/Icon/kebabIcon32x32.png";
+                var image = "http://" + PublicHostName + "/Icon/kebabIcon32x32.png";
 
                 var centerMarker = new google.maps.Marker({
                     icon: image,
@@ -177,7 +177,7 @@
 
             function addGeoJSONDataLayer(map) {
 
-                map.data.loadGeoJson('http://' + LocalHostName + '/Json/branches.json');
+                map.data.loadGeoJson('http://' + PublicHostName + '/Json/branches.json');
                 // https://storage.googleapis.com/maps-devrel/google.json
 
                 // When the user clicks, open an infowindow
@@ -209,7 +209,7 @@
 
 
                 map.data.setStyle({
-                    icon: 'http://' + LocalHostName + '/Icon/pin_turuncu_32x32.png'
+                    icon: 'http://' + PublicHostName + '/Icon/pin_turuncu_32x32.png'
                 });
             }
 
