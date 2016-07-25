@@ -27,163 +27,176 @@
         var LocalHostName = 'localhost/SampleMap';
         var PublicHostName = 'nadirsahpaz.azurewebsites.net';
 
-            function initialize() {
-                var mapOptions = {
-                    center: new google.maps.LatLng(38.535276, 35.040894),
-                    zoom: 7,
-                    disableDefaultUI: true,
-                    zoomControl: true,
-                    panControl: true,
-                    mapTypeControl: true,
-                    scaleControl: true,
-                    streetViewControl: true,
-                    rotateControl: true,
-                    overviewMapControl: true
-                };
-                var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
-                var initialCenter = mapOptions.center;
-                var initialZoom = mapOptions.zoom;
+        function initialize() {
+            var mapOptions = {
+                center: new google.maps.LatLng(38.535276, 35.040894),
+                zoom: 7,
+                disableDefaultUI: true,
+                zoomControl: true,
+                panControl: true,
+                mapTypeControl: true,
+                scaleControl: true,
+                streetViewControl: true,
+                rotateControl: true,
+                overviewMapControl: true
+            };
+            var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
+            window.map = map; // set map as a property of window object, will be accessable global
+            var initialCenter = mapOptions.center;
+            var initialZoom = mapOptions.zoom;
 
-                addMarker(map);
-                addPolyline(map);
-                addPolygon(map);
-                //addCircle(map);
-                //addRectangle(map);
-                addKmlLayer(map);
-                addGeoJSONDataLayer(map);
-                addGoToInitialExtent(map, initialCenter, initialZoom);
-            }
+            google.maps.event.addListener(map, "rightclick", saveNewPosition);
 
-            function addMarker(map) {
-                var image = "http://" + PublicHostName + "/Icon/kebabIcon32x32.png";
+            //function (event) {
+            //    var lat = event.latLng.lat();
+            //    var lng = event.latLng.lng();
+            //    // populate yor box/field with lat, lng
+            //    alert("Lat=" + lat + "; Lng=" + lng);
+            //});
 
-                var centerMarker = new google.maps.Marker({
-                    icon: image,
-                    position: new google.maps.LatLng(36.76811, 35.458997),
-                    map: map,
-                    title: "Capital Of Kebab"
-                });
+            addMarker(map);
+            addPolyline(map);
+            addPolygon(map);
+            //addCircle(map);
+            //addRectangle(map);
+            addKmlLayer(map);
+            addGeoJSONDataLayer(map);
+            //addGoToInitialExtent(map, initialCenter, initialZoom);
+            saveNewPosition(map);
+        }
 
-                var contentString = '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<h1 id=firstHeading" class="firstHeading">The Capital of Kebab - Adana</h1>' +
-                    '<div id="bodyContent">' +
-                    '<p>The <b>Capital of Kebab</b> is located in the south of Turkey.' +
-                    'It takes one hour flight from Istanbul</p>' +
-                    '<img src="http://cdn.kilissultanradyo.com/wp-content/uploads/2015/11/kebap.jpg" />' +
-                    '</div>' +
-                    '</div>';
+        function addMarker(map) {
+            var image = "http://" + PublicHostName + "/Icon/kebabIcon32x32.png";
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
+            var centerMarker = new google.maps.Marker({
+                icon: image,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: new google.maps.LatLng(36.76811, 35.458997),
+                map: map,
+                title: "Capital Of Kebab"
+            });
 
-                google.maps.event.addListener(centerMarker, 'click', function () {
-                    infowindow.open(map, centerMarker);
-                });
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h1 id=firstHeading" class="firstHeading">The Capital of Kebab - Adana</h1>' +
+                '<div id="bodyContent">' +
+                '<p>The <b>Capital of Kebab</b> is located in the south of Turkey.' +
+                'It takes one hour flight from Istanbul</p>' +
+                '<img src="http://cdn.kilissultanradyo.com/wp-content/uploads/2015/11/kebap.jpg" />' +
+                '</div>' +
+                '</div>';
 
-                centerMarker.setMap(map);
-            }
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
 
-            function addPolyline(map) {
-                var pathCoordinates = [
-                    new google.maps.LatLng(41.030272, 29.121061),
-                    new google.maps.LatLng(40.997406, 29.120333),
-                    new google.maps.LatLng(40.983759, 29.203896),
-                    new google.maps.LatLng(40.956977, 29.222754),
-                    new google.maps.LatLng(40.930021, 29.206533),
-                    new google.maps.LatLng(40.906242, 29.210858),
-                    new google.maps.LatLng(40.888516, 29.238013),
-                    new google.maps.LatLng(40.893589, 29.244121)
-                ];
-                var pathToCenter = new google.maps.Polyline({
-                    path: pathCoordinates,
-                    strokeColor: '#0000FF',
-                    strokeOpacity: 1.0,
-                    strokeWeight: 4
-                });
+            google.maps.event.addListener(centerMarker, 'click', function() {
+                infowindow.open(map, centerMarker);
+            });
 
-                pathToCenter.setMap(map);
-            }
+            centerMarker.setMap(map);
+        }
 
-            function addPolygon(map) {
-                var interlandCoors = [
-                    new google.maps.LatLng(41.040307, 28.940870),
-                    new google.maps.LatLng(41.034456, 28.938114),
-                    new google.maps.LatLng(41.019441, 28.923519),
-                    new google.maps.LatLng(40.988860, 28.919333), // southeast corner 
-                    new google.maps.LatLng(41.001957, 28.936991),
-                    new google.maps.LatLng(41.001495, 28.945973),
-                    new google.maps.LatLng(41.003883, 28.955670),
-                    new google.maps.LatLng(41.002342, 28.979452),
-                    new google.maps.LatLng(41.009506, 28.986903),
-                    new google.maps.LatLng(41.017361, 28.985883),
-                    new google.maps.LatLng(41.018209, 28.971491),
-                    new google.maps.LatLng(41.037998, 28.945157)
-                ];
-                var interlandArea = new google.maps.Polygon({
-                    path: interlandCoors,
-                    strokeColor: "black",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 1,
-                    fillColor: "#00FF00",
-                    fillOpacity: 0.6
-                });
+        function addPolyline(map) {
+            var pathCoordinates = [
+                new google.maps.LatLng(41.030272, 29.121061),
+                new google.maps.LatLng(40.997406, 29.120333),
+                new google.maps.LatLng(40.983759, 29.203896),
+                new google.maps.LatLng(40.956977, 29.222754),
+                new google.maps.LatLng(40.930021, 29.206533),
+                new google.maps.LatLng(40.906242, 29.210858),
+                new google.maps.LatLng(40.888516, 29.238013),
+                new google.maps.LatLng(40.893589, 29.244121)
+            ];
+            var pathToCenter = new google.maps.Polyline({
+                path: pathCoordinates,
+                strokeColor: '#0000FF',
+                strokeOpacity: 1.0,
+                strokeWeight: 4
+            });
 
-                interlandArea.setMap(map);
-            }
+            pathToCenter.setMap(map);
+        }
 
-            function addCircle(map) {
-                var circle = new google.maps.Circle({
-                    center: new google.maps.LatLng(41.031927, 29.112089),
-                    fillColor: "black",
-                    fillOpacity: 0.6,
-                    strokeColor: "white",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 4,
-                    radius: 1000,
-                    map: map
-                });
-            }
+        function addPolygon(map) {
+            var interlandCoors = [
+                new google.maps.LatLng(41.040307, 28.940870),
+                new google.maps.LatLng(41.034456, 28.938114),
+                new google.maps.LatLng(41.019441, 28.923519),
+                new google.maps.LatLng(40.988860, 28.919333), // southeast corner
+                new google.maps.LatLng(41.001957, 28.936991),
+                new google.maps.LatLng(41.001495, 28.945973),
+                new google.maps.LatLng(41.003883, 28.955670),
+                new google.maps.LatLng(41.002342, 28.979452),
+                new google.maps.LatLng(41.009506, 28.986903),
+                new google.maps.LatLng(41.017361, 28.985883),
+                new google.maps.LatLng(41.018209, 28.971491),
+                new google.maps.LatLng(41.037998, 28.945157)
+            ];
+            var interlandArea = new google.maps.Polygon({
+                path: interlandCoors,
+                strokeColor: "black",
+                strokeOpacity: 0.8,
+                strokeWeight: 1,
+                fillColor: "#00FF00",
+                fillOpacity: 0.6
+            });
 
-            function addRectangle(map) {
-                var rectangle = new google.maps.Rectangle({
-                    bounds: new google.maps.LatLngBounds(
-                        new google.maps.LatLng(41.029264, 29.095723),
-                        new google.maps.LatLng(41.031927, 29.112089)
-                        ),
-                    fillColor: "black",
-                    fillOpacity: 0.6,
-                    strokeColor: "white",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 4,
-                    map: map
-                });
-            }
+            interlandArea.setMap(map);
+        }
 
-            function addKmlLayer(map) {
+        function addCircle(map) {
+            var circle = new google.maps.Circle({
+                center: new google.maps.LatLng(41.031927, 29.112089),
+                fillColor: "black",
+                fillOpacity: 0.6,
+                strokeColor: "white",
+                strokeOpacity: 0.8,
+                strokeWeight: 4,
+                radius: 1000,
+                map: map
+            });
+        }
 
-                var interlandLayer = new google.maps.KmlLayer({
-                    url: 'https://dl.dropboxusercontent.com/u/70378149/Interland01.kml',
-                    preserveViewport: true
-                });
-                interlandLayer.setMap(map);
+        function addRectangle(map) {
+            var rectangle = new google.maps.Rectangle({
+                bounds: new google.maps.LatLngBounds(
+                    new google.maps.LatLng(41.029264, 29.095723),
+                    new google.maps.LatLng(41.031927, 29.112089)
+                ),
+                fillColor: "black",
+                fillOpacity: 0.6,
+                strokeColor: "white",
+                strokeOpacity: 0.8,
+                strokeWeight: 4,
+                map: map
+            });
+        }
 
-                /* to Remove KmlLayer */
-                //kmlLayer.setMap(null);
-                //kmlLayer = null;
-            }
+        function addKmlLayer(map) {
 
-            function addGeoJSONDataLayer(map) {
+            var interlandLayer = new google.maps.KmlLayer({
+                url: 'https://dl.dropboxusercontent.com/u/70378149/Interland01.kml',
+                preserveViewport: true
+            });
+            interlandLayer.setMap(map);
 
-                map.data.loadGeoJson('http://' + PublicHostName + '/Json/branches.json');
-                // https://storage.googleapis.com/maps-devrel/google.json
+            /* to Remove KmlLayer */
+            //kmlLayer.setMap(null);
+            //kmlLayer = null;
+        }
 
-                // When the user clicks, open an infowindow
-                map.data.addListener('click', function (event) {
-                    var contentString =
-                        '<div id="content" style="width:500px">' +
+        function addGeoJSONDataLayer(map) {
+
+            map.data.loadGeoJson('http://' + PublicHostName + '/Json/branches.json');
+            // https://storage.googleapis.com/maps-devrel/google.json
+
+            // When the user clicks, open an infowindow
+            map.data.addListener('click', function(event) {
+                var contentString =
+                    '<div id="content" style="width:500px">' +
                         '<div id="siteNotice">' +
                         '</div>' +
                         '<h1 id=firstHeading" class="firstHeading">' + event.feature.getProperty("name") + '</h1>' +
@@ -195,32 +208,76 @@
                         '</div>';
 
 
+//var myHtml = event.feature.getProperty("name");
+                //InfoWindow.setContent("<div style='width:150px;'>" + myHtml + "</div>");
 
-                    //var myHtml = event.feature.getProperty("name");
-                    //InfoWindow.setContent("<div style='width:150px;'>" + myHtml + "</div>");
-
-                    InfoWindow.setContent(contentString);
-                    // position the infowindow on the marker
-                    InfoWindow.setPosition(event.feature.getGeometry().get());
-                    // anchor the infowindow on the marker
-                    InfoWindow.setOptions({ pixelOffset: new google.maps.Size(0, -30) });
-                    InfoWindow.open(map);
-                });
+                InfoWindow.setContent(contentString);
+                // position the infowindow on the marker
+                InfoWindow.setPosition(event.feature.getGeometry().get());
+                // anchor the infowindow on the marker
+                InfoWindow.setOptions({ pixelOffset: new google.maps.Size(0, -30) });
+                InfoWindow.open(map);
+            });
 
 
-                map.data.setStyle({
-                    icon: 'http://' + PublicHostName + '/Icon/pin_turuncu_32x32.png'
-                });
-            }
+            map.data.setStyle({
+                icon: 'http://' + PublicHostName + '/Icon/pin_turuncu_32x32.png'
+            });
+        }
 
-            function addGoToInitialExtent(map, initialCenter, initialZoom) {
-                google.maps.event.addListener(map, 'rightclick', function () {
-                    map.setCenter(initialCenter);
-                    map.setZoom(initialZoom);
-                });
-            }
+        function addGoToInitialExtent(map, initialCenter, initialZoom) {
+            google.maps.event.addListener(map, 'rightclick', function() {
+                map.setCenter(initialCenter);
+                map.setZoom(initialZoom);
+            });
+        }
 
-            google.maps.event.addDomListener(window, "load", initialize);
+        function saveNewPosition(event) {
+            var lat = event.latLng.lat();
+            var lng = event.latLng.lng();
+
+            var image = "http://" + PublicHostName + "/Icon/home_32x32.png";
+            var addPositionMarker = new google.maps.Marker({
+                icon: image,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: new google.maps.LatLng(lat, lng),
+                map: map,
+                title: "Add New Position"
+            });
+            addPositionMarker.addListener('click', function() {
+                if (addPositionMarker.getAnimation() !== null) {
+                    addPositionMarker.setAnimation(null);
+                } else {
+                    addPositionMarker.setAnimation(google.maps.Animation.BOUNCE);
+                }
+            });
+
+            addPositionMarker.setMap(window.map);
+
+
+            //var contentString = '<div id="content">' +
+            //    '<div id="siteNotice">' +
+            //    '</div>' +
+            //    '<h1 id=firstHeading" class="firstHeading">Clicked location info</h1>' +
+            //    '<div id="bodyContent">' +
+            //    '<p>Lat : ' + lat + '; Lng: ' + lng +
+            //    '</p></br>' +
+            //    '<button type="button">Update</button>'+
+            //    '</div>' +
+            //    '</div>';
+
+            //var infowindow = new google.maps.InfoWindow({
+            //    content: contentString
+            //});
+            //infowindow.setMap(window.map);
+
+            // populate yor box/field with lat, lng
+            //alert("Lat=" + lat + "; Lng=" + lng);
+
+        }
+
+        google.maps.event.addDomListener(window, "load", initialize);
     </script>
 </head>
 <body>
