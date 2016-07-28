@@ -19,8 +19,22 @@
         }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCHpcFRqfDZMmOith5v8YT64CGMwgKtX4"></script>
-    <script type="text/javascript" src="Script/google-maps-3-vs-1-0.js"></script>
+<script type="text/javascript" src="Script/google-maps-3-vs-1-0.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script type="text/javascript">
+        $(document).ready(function() {
+            $('#searchLocationBtn').click(function () {
+                $('#warningLbl').text('');
+                if ($('#addressInput').val() !== '') {
+                    var address = $('#addressInput').val();
+
+                    getLatLong(address);
+
+                } else {
+                    $('#warningLbl').text('Address Coordinates Not Found !!!');
+                }
+            });
+        });
 
         // global variables
         var InfoWindow = new google.maps.InfoWindow();
@@ -62,7 +76,7 @@
             addKmlLayer(map);
             addGeoJSONDataLayer(map);
             //addGoToInitialExtent(map, initialCenter, initialZoom);
-            saveNewPosition(map);
+            //saveNewPosition(map);
         }
 
         function addMarker(map) {
@@ -277,10 +291,64 @@
 
         }
 
+        function pinAddressLocation(lat, lng) {
+
+            var image = "http://" + PublicHostName + "/Icon/home_32x32.png";
+
+            var addressMarker = new google.maps.Marker({
+                icon: image,
+                animation: google.maps.Animation.DROP,
+                position: new google.maps.LatLng(lat, lng),
+                map: window.map,
+                title: "Address Search Result"
+            });
+
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h1 id=searchHeading" class="searchHeading">Search Result</h1>' +
+                '<div id="bodyContent">' +
+                '<p><b>GeoCoding Search Result</b> ' +
+                '</p>' +
+                '</div>' +
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            google.maps.event.addListener(addressMarker, 'click', function () {
+                infowindow.open(window.map, addressMarker);
+            });
+
+            addressMarker.setMap(window.map);
+        }
+
+        function getLatLong(address) {
+            var geocoder = new google.maps.Geocoder();
+            var location;
+            geocoder.geocode({ 'address': address, 'region': 'tr' }, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    location = results[0].geometry.location;
+                    if (location) {
+                        pinAddressLocation(location.lat(), location.lng());
+                    }
+                } else {
+                    var msg = "Unable to find address: " + status;
+                    $('#warningLbl').text(msg);
+                }
+            });
+        }
+        
         google.maps.event.addDomListener(window, "load", initialize);
     </script>
 </head>
 <body>
+    <div id="searchLocationDiv" style="height: 20px; width: 100%; background-color: #404040; padding: 10px 10px;">
+        <input type="text" id="addressInput" placeholder="Type Your Address" autofocus="autofocus" style="width: 400px; padding-left: 5px"/>
+        <button id="searchLocationBtn">Find Location</button>
+        <label id="warningLbl" style="padding-left: 10px; color: white"></label>
+    </div>
     <div id="mapDiv"></div>
 </body>
 </html>
