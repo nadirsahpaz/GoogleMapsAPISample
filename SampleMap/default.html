@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Google Maps API Sample Page</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <style type="text/css">
         html {
             height: 100%;
@@ -18,8 +18,8 @@
             height: 100%;
         }
     </style>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCHpcFRqfDZMmOith5v8YT64CGMwgKtX4"></script>
-<script type="text/javascript" src="Script/google-maps-3-vs-1-0.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={apiKey}&libraries=visualization"></script>
+    <script type="text/javascript" src="Script/google-maps-3-vs-1-0.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -39,7 +39,25 @@
         // global variables
         var InfoWindow = new google.maps.InfoWindow();
         var LocalHostName = 'localhost/SampleMap';
-        var PublicHostName = 'nadirsahpaz.azurewebsites.net';
+        var PublicHostName = 'googlemapsdemo.azurewebsites.net';
+
+        // GroundOverlay super bir seye benziyor, bak buna
+        // HeatMap &libraries=visualization
+        var heatMapData = [
+            new google.maps.LatLng(39.529106, 28.583154),
+            new google.maps.LatLng(39.629106, 28.583154),
+            new google.maps.LatLng(39.729106, 28.683154),
+            new google.maps.LatLng(39.571462, 28.841333),
+            new google.maps.LatLng(39.660325, 29.319238),
+            new google.maps.LatLng(39.333936, 29.868555),
+            new google.maps.LatLng(38.650833, 29.714746),
+            new google.maps.LatLng(38.805106, 29.516992),
+            new google.maps.LatLng(39.685693, 28.660059),
+            new google.maps.LatLng(39.673010, 28.747949),
+            new google.maps.LatLng(39.683010, 28.647949),
+            new google.maps.LatLng(39.684010, 28.645949),
+        ];
+
 
         function initialize() {
             var mapOptions = {
@@ -54,6 +72,7 @@
                 rotateControl: true,
                 overviewMapControl: true
             };
+            
             var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
             window.map = map; // set map as a property of window object, will be accessable global
             var initialCenter = mapOptions.center;
@@ -73,10 +92,22 @@
             addPolygon(map);
             //addCircle(map);
             //addRectangle(map);
+
             addKmlLayer(map);
             addGeoJSONDataLayer(map);
+
             //addGoToInitialExtent(map, initialCenter, initialZoom);
             //saveNewPosition(map);
+
+
+            var pointArray = new google.maps.MVCArray(heatMapData);
+
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: pointArray
+            });
+
+            heatmap.setMap(map);
+
         }
 
         function addMarker(map) {
@@ -91,14 +122,14 @@
                 title: "Capital Of Kebab"
             });
 
-            var contentString = '<div id="content">' +
+            var contentString = '<div id="content" style="width:350px; height:300px">' +
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<h1 id=firstHeading" class="firstHeading">The Capital of Kebab - Adana</h1>' +
                 '<div id="bodyContent">' +
                 '<p>The <b>Capital of Kebab</b> is located in the south of Turkey.' +
                 'It takes one hour flight from Istanbul</p>' +
-                '<img src="http://cdn.kilissultanradyo.com/wp-content/uploads/2015/11/kebap.jpg" />' +
+                '<img src="http://cdn.kilissultanradyo.com/wp-content/uploads/2015/11/kebap.jpg" height="200px" width="350px" />' +
                 '</div>' +
                 '</div>';
 
@@ -128,7 +159,7 @@
                 path: pathCoordinates,
                 strokeColor: '#0000FF',
                 strokeOpacity: 1.0,
-                strokeWeight: 4
+                strokeWeight: 2
             });
 
             pathToCenter.setMap(map);
@@ -203,26 +234,25 @@
         }
 
         function addGeoJSONDataLayer(map) {
-
             map.data.loadGeoJson('http://' + PublicHostName + '/Json/branches.json');
             // https://storage.googleapis.com/maps-devrel/google.json
 
             // When the user clicks, open an infowindow
             map.data.addListener('click', function(event) {
                 var contentString =
-                    '<div id="content" style="width:500px">' +
+                    '<div id="content" style="width:300px; height:250px">' +
                         '<div id="siteNotice">' +
                         '</div>' +
                         '<h1 id=firstHeading" class="firstHeading">' + event.feature.getProperty("name") + '</h1>' +
                         '<div id="bodyContent">' +
                         '<p>Address Information Here </p>' +
                         '<p>' + event.feature.getProperty("city") + '</p>' +
-                        '<img src="' + event.feature.getProperty("icon") + '" />' +
+                        '<img src="' + event.feature.getProperty("theme") + '" alt="' + event.feature.getProperty("name") + '" width="300px" height="130px" />' +
                         '</div>' +
                         '</div>';
 
 
-//var myHtml = event.feature.getProperty("name");
+                //var myHtml = event.feature.getProperty("name");
                 //InfoWindow.setContent("<div style='width:150px;'>" + myHtml + "</div>");
 
                 InfoWindow.setContent(contentString);
@@ -233,10 +263,13 @@
                 InfoWindow.open(map);
             });
 
-
-            map.data.setStyle({
-                icon: 'http://' + PublicHostName + '/Icon/pin_turuncu_32x32.png'
+            map.data.setStyle(function (feature) {
+                return { icon: feature.getProperty('icon') };
             });
+            
+            //map.data.setStyle({
+            //    icon: 'http://' + PublicHostName + '/Icon/pin_turuncu_32x32.png'
+            //});
         }
 
         function addGoToInitialExtent(map, initialCenter, initialZoom) {
@@ -344,8 +377,8 @@
     </script>
 </head>
 <body>
-    <div id="searchLocationDiv" style="height: 20px; width: 100%; background-color: #404040; padding: 10px 10px;">
-        <input type="text" id="addressInput" placeholder="Type Your Address" autofocus="autofocus" style="width: 400px; padding-left: 5px"/>
+    <div id="searchLocationDiv" style="height: auto; width: auto; background-color: #404040; padding: 10px 10px;">
+        <input type="text" id="addressInput" placeholder="Type Your Address" style="width: auto; padding-left: 5px"/>
         <button id="searchLocationBtn">Find Location</button>
         <label id="warningLbl" style="padding-left: 10px; color: white"></label>
     </div>

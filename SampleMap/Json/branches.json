@@ -7,7 +7,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Iskender Sube",
                 "name": "Iskender Sube",
                 "city": "BURSA"
@@ -26,7 +27,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Merkez Sube",
                 "name": "Merkez Sube",
                 "city": "ISTANBUL"
@@ -45,7 +47,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Vodafone Arena Karakartal Sube",
                 "name": "Vodafone Arena Karakartal Sube",
                 "city": "ISTANBUL"
@@ -64,7 +67,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Izmir Sube",
                 "name": "Izmir Sube",
                 "city": "IZMIR"
@@ -83,7 +87,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Lara Sube",
                 "name": "Lara Sube",
                 "city": "ANTALYA"
@@ -102,7 +107,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Beyazit Sube",
                 "name": "Beyazit Sube",
                 "city": "ISTANBUL"
@@ -121,7 +127,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Angara Sube",
                 "name": "Angara Sube",
                 "city": "ANKARA"
@@ -140,7 +147,8 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
-                "icon": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
+                "icon": "http://googlemapsdemo.azurewebsites.net/Icon/pin_turuncu_32x32.png",
                 "description": "Bafra Pide Sube",
                 "name": "Bafra Pide Sube",
                 "city": "SAMSUN"
@@ -159,6 +167,7 @@
                 "marker-color": "#7e7e7e",
                 "marker-size": "medium",
                 "marker-symbol": "",
+                "theme": "http://katilimdunyasi.com/wp-content/uploads/2015/10/albaraka-%C5%9Fube.jpg",
                 "icon": "http://localhost/SampleMap/Icon/home_32x32.png",
                 "description": "Benim Ev :) Sube degil",
                 "name": "Benim Ev :) Sube degil",

@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Json\branches.json" />
+    <None Include="Properties\PublishProfiles\googlemapsdemo - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\googlemapsdemo - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
