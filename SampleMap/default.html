@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Google Maps API Sample Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Activity Maps Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style type="text/css">
         html {
             height: 100%;
@@ -18,9 +18,10 @@
             height: 100%;
         }
     </style>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={apiKey}&libraries=visualization"></script>
-    <script type="text/javascript" src="Script/google-maps-3-vs-1-0.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCHpcFRqfDZMmOith5v8YT64CGMwgKtX4&libraries=visualization"></script>
+    <script type="text/javascript" src="Script/google-maps-3-vs-1-0.js"></script>
+    <script type="text/javascript" src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#searchLocationBtn').click(function () {
@@ -37,12 +38,24 @@
         });
 
         // global variables
-        var InfoWindow = new google.maps.InfoWindow();
+        // global variables
         var LocalHostName = 'localhost/SampleMap';
         var PublicHostName = 'googlemapsdemo.azurewebsites.net';
 
-        // GroundOverlay super bir seye benziyor, bak buna
+        var InfoWindow = new google.maps.InfoWindow();
+        var MessageWindow;
+        var iconKebap = "Icon/kebabIcon_32x32.png";
+        var iconNew = "Icon/newRecord_32x32.png";
+        var iconHome = "Icon/home_32x32.png";
+
+        //var LocalHostName = 'localhost/SampleMap';
+        //var PublicHostName = 'googlemapsdemo.azurewebsites.net';
+
+        // TODO : Saving User Added Form Data https://developers.google.com/maps/documentation/javascript/info-windows-to-db
+        // TODO : Combining Data feature incelenecek https://developers.google.com/maps/documentation/javascript/combining-data
+        // TODO : GroundOverlay super bir seye benziyor, bak buna
         // HeatMap &libraries=visualization
+
         var heatMapData = [
             new google.maps.LatLng(39.529106, 28.583154),
             new google.maps.LatLng(39.629106, 28.583154),
@@ -56,8 +69,17 @@
             new google.maps.LatLng(39.673010, 28.747949),
             new google.maps.LatLng(39.683010, 28.647949),
             new google.maps.LatLng(39.684010, 28.645949),
+            new google.maps.LatLng(38.914039, 27.960239),
+            new google.maps.LatLng(38.814039, 27.960239),
+            new google.maps.LatLng(38.714039, 27.960239),
+            new google.maps.LatLng(38.614039, 27.960239),
+            new google.maps.LatLng(38.914039, 28.260239),
+            new google.maps.LatLng(38.814039, 28.260239),
+            new google.maps.LatLng(38.714039, 28.260239),
+            new google.maps.LatLng(38.614039, 28.260239),
+            new google.maps.LatLng(38.814039, 28.060139),
+            new google.maps.LatLng(38.718039, 28.128239),
         ];
-
 
         function initialize() {
             var mapOptions = {
@@ -72,57 +94,47 @@
                 rotateControl: true,
                 overviewMapControl: true
             };
-            
+
             var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
             window.map = map; // set map as a property of window object, will be accessable global
             var initialCenter = mapOptions.center;
             var initialZoom = mapOptions.zoom;
 
-            google.maps.event.addListener(map, "rightclick", saveNewPosition);
-
-            //function (event) {
-            //    var lat = event.latLng.lat();
-            //    var lng = event.latLng.lng();
-            //    // populate yor box/field with lat, lng
-            //    alert("Lat=" + lat + "; Lng=" + lng);
-            //});
-
-            addMarker(map);
-            addPolyline(map);
-            addPolygon(map);
+            //addPolyline(map);
             //addCircle(map);
             //addRectangle(map);
-
+            addMarker();
+            addPolygon(map);
             addKmlLayer(map);
             addGeoJSONDataLayer(map);
-
+            setInputForm();
+            addMarkerClusterer();
             //addGoToInitialExtent(map, initialCenter, initialZoom);
-            //saveNewPosition(map);
-
 
             var pointArray = new google.maps.MVCArray(heatMapData);
-
             var heatmap = new google.maps.visualization.HeatmapLayer({
                 data: pointArray
             });
-
             heatmap.setMap(map);
+
+            google.maps.event.addListener(map, "click", function () {
+                InfoWindow.close();
+            });
 
         }
 
-        function addMarker(map) {
-            var image = "http://" + PublicHostName + "/Icon/kebabIcon32x32.png";
+        function addMarker() {
 
             var centerMarker = new google.maps.Marker({
-                icon: image,
+                icon: iconKebap,
                 draggable: true,
                 animation: google.maps.Animation.DROP,
                 position: new google.maps.LatLng(36.76811, 35.458997),
-                map: map,
+                map: window.map,
                 title: "Capital Of Kebab"
             });
 
-            var contentString = '<div id="content" style="width:350px; height:300px">' +
+            var contentString = '<div id="content" style="width:350px; height:300px;">' +
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<h1 id=firstHeading" class="firstHeading">The Capital of Kebab - Adana</h1>' +
@@ -134,14 +146,17 @@
                 '</div>';
 
             var infowindow = new google.maps.InfoWindow({
-                content: contentString
+                content: contentString,
+                maxWidth: 400
             });
 
             google.maps.event.addListener(centerMarker, 'click', function() {
-                infowindow.open(map, centerMarker);
+                infowindow.open(window.map, centerMarker);
             });
-
-            centerMarker.setMap(map);
+            google.maps.event.addListener(window.map, 'click', function () {
+                infowindow.close();
+            });
+            centerMarker.setMap(window.map);
         }
 
         function addPolyline(map) {
@@ -155,6 +170,7 @@
                 new google.maps.LatLng(40.888516, 29.238013),
                 new google.maps.LatLng(40.893589, 29.244121)
             ];
+
             var pathToCenter = new google.maps.Polyline({
                 path: pathCoordinates,
                 strokeColor: '#0000FF',
@@ -180,13 +196,82 @@
                 new google.maps.LatLng(41.018209, 28.971491),
                 new google.maps.LatLng(41.037998, 28.945157)
             ];
+
+            var erzurumBoundaries = [
+    new google.maps.LatLng(40.02341, 40.30334),
+    new google.maps.LatLng(40.00658, 40.42969),
+    new google.maps.LatLng(40.06126, 40.52856),
+    new google.maps.LatLng(40.10749, 40.64392),
+    new google.maps.LatLng(40.15789, 40.70984),
+    new google.maps.LatLng(40.20634, 40.71512),
+    new google.maps.LatLng(40.33604, 40.55324),
+    new google.maps.LatLng(40.37584, 40.5835),
+    new google.maps.LatLng(40.46541, 40.55676),
+    new google.maps.LatLng(40.52981, 40.60387),
+    new google.maps.LatLng(40.59727, 40.7373),
+    new google.maps.LatLng(40.6639, 40.92407),
+    new google.maps.LatLng(40.82628, 41.15479),
+    new google.maps.LatLng(40.76806, 41.25366),
+    new google.maps.LatLng(40.73352, 41.34485),
+    new google.maps.LatLng(40.63897, 41.31409),
+    new google.maps.LatLng(40.56807, 41.3855),
+    new google.maps.LatLng(40.65564, 41.5448),
+    new google.maps.LatLng(40.70949, 41.59943),
+    new google.maps.LatLng(40.69313, 41.69861),
+    new google.maps.LatLng(40.65147, 41.77551),
+    new google.maps.LatLng(40.6848, 41.82495),
+    new google.maps.LatLng(40.82072, 41.87388),
+    new google.maps.LatLng(40.86117, 41.85374),
+    new google.maps.LatLng(40.96331, 42.00073),
+    new google.maps.LatLng(40.95501, 42.1106),
+    new google.maps.LatLng(40.91766, 42.31384),
+    new google.maps.LatLng(40.82212, 42.38525),
+    new google.maps.LatLng(40.78886, 42.5061),
+    new google.maps.LatLng(40.72681, 42.56618),
+    new google.maps.LatLng(40.65981, 42.56653),
+    new google.maps.LatLng(40.54303, 42.53906),
+    new google.maps.LatLng(40.4344, 42.5116),
+    new google.maps.LatLng(40.39258, 42.45117),
+    new google.maps.LatLng(40.34236, 42.33032),
+    new google.maps.LatLng(40.28372, 42.14905),
+    new google.maps.LatLng(40.22922, 42.19849),
+    new google.maps.LatLng(40.12429, 42.41272),
+    new google.maps.LatLng(39.94765, 42.56653),
+    new google.maps.LatLng(39.86796, 42.39157),
+    new google.maps.LatLng(39.82577, 42.3036),
+    new google.maps.LatLng(39.77477, 42.3468),
+    new google.maps.LatLng(39.69028, 42.45117),
+    new google.maps.LatLng(39.65108, 42.50994),
+    new google.maps.LatLng(39.60992, 42.5116),
+    new google.maps.LatLng(39.51713, 42.40628),
+    new google.maps.LatLng(39.42076, 42.20719),
+    new google.maps.LatLng(39.35979, 42.19849),
+    new google.maps.LatLng(39.3003, 42.16003),
+    new google.maps.LatLng(39.28369, 42.08494),
+    new google.maps.LatLng(39.24927, 42.03918),
+    new google.maps.LatLng(39.19436, 41.90832),
+    new google.maps.LatLng(39.16865, 41.67346),
+    new google.maps.LatLng(39.34704, 41.35254),
+    new google.maps.LatLng(39.35129, 41.17676),
+    new google.maps.LatLng(39.45561, 40.99855),
+    new google.maps.LatLng(39.46153, 40.89949),
+    new google.maps.LatLng(39.41049, 40.77462),
+    new google.maps.LatLng(39.41073, 40.66315),
+    new google.maps.LatLng(39.45538, 40.60284),
+    new google.maps.LatLng(39.61475, 40.66804),
+    new google.maps.LatLng(39.74078, 40.5688),
+    new google.maps.LatLng(39.86658, 40.5245),
+    new google.maps.LatLng(39.94083, 40.28758),
+    new google.maps.LatLng(40.02341, 40.30334)
+            ];
+
             var interlandArea = new google.maps.Polygon({
-                path: interlandCoors,
-                strokeColor: "black",
-                strokeOpacity: 0.8,
-                strokeWeight: 1,
-                fillColor: "#00FF00",
-                fillOpacity: 0.6
+                path: erzurumBoundaries,
+                strokeColor: "red",
+                strokeOpacity: 0.7,
+                strokeWeight: 0.7,
+                fillColor: "#6afbff",
+                fillOpacity: 0.3
             });
 
             interlandArea.setMap(map);
@@ -235,12 +320,11 @@
 
         function addGeoJSONDataLayer(map) {
             map.data.loadGeoJson('http://' + PublicHostName + '/Json/branches.json');
-            // https://storage.googleapis.com/maps-devrel/google.json
 
-            // When the user clicks, open an infowindow
+            // show infowindow
             map.data.addListener('click', function(event) {
                 var contentString =
-                    '<div id="content" style="width:300px; height:250px">' +
+                    '<div id="content" style="width:300px; height:250px;">' +
                         '<div id="siteNotice">' +
                         '</div>' +
                         '<h1 id=firstHeading" class="firstHeading">' + event.feature.getProperty("name") + '</h1>' +
@@ -264,12 +348,8 @@
             });
 
             map.data.setStyle(function (feature) {
-                return { icon: feature.getProperty('icon') };
+                return { icon: feature.getProperty('icon'), title: feature.getProperty('name') };
             });
-            
-            //map.data.setStyle({
-            //    icon: 'http://' + PublicHostName + '/Icon/pin_turuncu_32x32.png'
-            //});
         }
 
         function addGoToInitialExtent(map, initialCenter, initialZoom) {
@@ -283,9 +363,8 @@
             var lat = event.latLng.lat();
             var lng = event.latLng.lng();
 
-            var image = "http://" + PublicHostName + "/Icon/home_32x32.png";
             var addPositionMarker = new google.maps.Marker({
-                icon: image,
+                icon: iconHome,
                 draggable: true,
                 animation: google.maps.Animation.DROP,
                 position: new google.maps.LatLng(lat, lng),
@@ -301,7 +380,6 @@
             });
 
             addPositionMarker.setMap(window.map);
-
 
             //var contentString = '<div id="content">' +
             //    '<div id="siteNotice">' +
@@ -326,10 +404,8 @@
 
         function pinAddressLocation(lat, lng) {
 
-            var image = "http://" + PublicHostName + "/Icon/home_32x32.png";
-
             var addressMarker = new google.maps.Marker({
-                icon: image,
+                icon: iconNew,
                 animation: google.maps.Animation.DROP,
                 position: new google.maps.LatLng(lat, lng),
                 map: window.map,
@@ -346,12 +422,13 @@
                 '</div>' +
                 '</div>';
 
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 400
+            })
 
             google.maps.event.addListener(addressMarker, 'click', function () {
-                infowindow.open(window.map, addressMarker);
+                infoWindow.open(window.map, addressMarker);
             });
 
             addressMarker.setMap(window.map);
@@ -372,16 +449,134 @@
                 }
             });
         }
-        
+
+        function getAddressFromLatLng(latlng) {
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'location': latlng }, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    alert(results[0].formatted_address)
+                } else {
+                    var msg = "Unable to find address: " + status;
+                    alert(msg);
+                    //$('#warningLbl').text(msg);
+                }
+            });
+        }
+
+        function setInputForm() {
+
+            InfoWindow = new google.maps.InfoWindow({
+                content: document.getElementById('form')
+            })
+
+            MessageWindow = new google.maps.InfoWindow({
+                content: document.getElementById('message')
+            });
+
+            google.maps.event.addListener(map, 'rightclick', function (event) {
+                marker = new google.maps.Marker({
+                    position: event.latLng,
+                    map: window.map,
+                    icon: iconNew
+                });
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    InfoWindow.open(window.map, marker);
+                });
+            });
+        }
+
+        function saveData() {
+            var name = escape(document.getElementById('name').value);
+            var address = escape(document.getElementById('address').value);
+            var type = document.getElementById('type').value;
+            var latlng = marker.getPosition();
+            var url = 'phpsqlinfo_addrow.php?name=' + name + '&address=' + address +
+                      '&type=' + type + '&lat=' + latlng.lat() + '&lng=' + latlng.lng();
+
+            var result = 'name : ' + name + '\r\n'
+                        + 'surname : ' + address + '\r\n'
+                        + 'type : ' + type + '\r\n'
+                        + 'latitude : ' + latlng.lat() + '\r\n'
+                        + 'longitude : ' + latlng.lng();
+
+            alert(result);
+
+            getAddressFromLatLng(latlng)
+
+            //downloadUrl(url, function (data, responseCode) {
+
+            //    if (responseCode == 200 && data.length <= 1) {
+            //        infowindow.close();
+            //        messagewindow.open(map, marker);
+            //    }
+            //});
+        }
+
+        function addMarkerClusterer() {
+            //var map = new google.maps.Map(document.getElementById('mapDiv'), {
+            //    zoom: 3,
+            //    center: { lat: -28.024, lng: 140.887 }
+            //});
+
+            var locations = [
+                new google.maps.LatLng(40.002520, 38.059819),
+                new google.maps.LatLng(39.703109, 36.955693),
+                new google.maps.LatLng(39.705222, 37.032597),
+                new google.maps.LatLng(39.264307, 37.320988),
+                new google.maps.LatLng(38.755000, 35.766044),
+                new google.maps.LatLng(38.837802, 35.530466),
+                new google.maps.LatLng(38.657675, 35.414987),
+                new google.maps.LatLng(38.390254, 35.572039),
+                new google.maps.LatLng(37.969057, 34.620487),
+                new google.maps.LatLng(37.983621, 34.809874),
+                new google.maps.LatLng(38.335926, 31.451729),
+                new google.maps.LatLng(37.867024, 32.366327),
+                new google.maps.LatLng(37.823252, 32.574190),
+                new google.maps.LatLng(36.968217, 32.592666)
+            ];
+            // Create an array of alphabetical characters used to label the markers.
+            var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var markers = locations.map(function (item, i) {
+                return new google.maps.Marker({
+                    position: item,
+                    label: labels[i % labels.length]
+                });
+            });
+
+            // Add a marker clusterer to manage the markers.
+            var markerCluster = new MarkerClusterer(window.map, markers,
+                { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
+
+        }
+
         google.maps.event.addDomListener(window, "load", initialize);
+
     </script>
 </head>
 <body>
     <div id="searchLocationDiv" style="height: auto; width: auto; background-color: #404040; padding: 10px 10px;">
-        <input type="text" id="addressInput" placeholder="Type Your Address" style="width: auto; padding-left: 5px"/>
+        <input type="text" id="addressInput" placeholder="Type Your Address" style="width: auto; padding-left: 5px" />
         <button id="searchLocationBtn">Find Location</button>
         <label id="warningLbl" style="padding-left: 10px; color: white"></label>
     </div>
     <div id="mapDiv"></div>
+    <div id="form">
+        <table>
+            <tr><td>Name:</td> <td><input type='text' id='name' /> </td> </tr>
+            <tr><td>Address:</td> <td><input type='text' id='address' /> </td> </tr>
+            <tr>
+                <td>Type:</td>
+                <td>
+                    <select id='type'>
+                        <option value='ev' SELECTED>Ev</option>
+                        <option value='isyeri'>Is Yeri</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td></td><td><input type='button' value='Save' onclick='saveData()' /></td></tr>
+        </table>
+    </div>
+    <div id="message">Location saved</div>
 </body>
 </html>
