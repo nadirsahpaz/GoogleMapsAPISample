@@ -77,17 +77,22 @@
       }
 
       function displayRoute(origin, destination, service, display) {
-        service.route({
-          origin: origin,
-          destination: destination,
-          travelMode: 'DRIVING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            display.setDirections(response);
-          } else {
-            alert('Could not display directions due to: ' + status);
-          }
-        });
+          var wayPoints = [new google.maps.LatLng(39.7471, 37.0122), new google.maps.LatLng(38.3360, 38.2351)];
+          var wPoints = [{ location: new google.maps.LatLng(39.7471, 37.0122), stopover: false },
+          { location: new google.maps.LatLng(38.3360, 38.2351), stopover: false }];
+
+          service.route({
+              origin: origin,
+              destination: destination,
+              waypoints: wPoints,
+              travelMode: 'DRIVING'
+          }, function (response, status) {
+              if (status === 'OK') {
+                  display.setDirections(response);
+              } else {
+                  alert('Could not display directions due to: ' + status);
+              }
+          });
       }
 
       function computeTotalDistance(result) {
