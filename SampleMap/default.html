@@ -31,8 +31,9 @@
         // TODO : Combining Data feature incelenecek https://developers.google.com/maps/documentation/javascript/combining-data
         // TODO : GroundOverlay super bir seye benziyor, bak buna
 
-        var LocalHostName = 'localhost/SampleMap';
-        var PublicHostName = 'googlemapsdemo.azurewebsites.net';
+        var HostName = window.location.host;
+        if (HostName == 'localhost')
+            HostName += '/SampleMap';
 
         var InfoWindow;
         var MessageWindow;
@@ -302,7 +303,7 @@
         }
 
         function addGeoJSONDataLayer(map) {
-            map.data.loadGeoJson('http://' + PublicHostName + '/Json/branches.json');
+            map.data.loadGeoJson('http://' + HostName + '/Json/branches.json');
 
             // show infowindow
             map.data.addListener('click', function (event) {
@@ -521,11 +522,56 @@
             ];
             // Create an array of alphabetical characters used to label the markers.
             var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var customerType = ['Tüzel', 'Gerçek'];
+            var maritalStatus = ['Bekar', 'Evli'];
             var markers = locations.map(function (item, i) {
-                return new google.maps.Marker({
+                var mrk = new google.maps.Marker({
                     position: item,
                     label: labels[i % labels.length]
                 });
+
+                var markerContent = '<div id="content" style="width:200px; height:190px;">'
+                    + '<h1>Customer ' + labels[i % labels.length] + '</h1>'
+                    + '<div id="bodyContent">'
+                    + '<table>'
+                    + '<tr>'
+                    + '<td width="120px">Adı</td><td>Kısa Ad ' + (i+1)  + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Soyadı</td><td>Soyad ' + (i + 1) + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Müşteri Tipi</td><td>' + customerType[i - parseInt(i/2)*2] + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Yaşı</td><td>' + (i+1) * (i+1) + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Medeni Hali</td><td>' + maritalStatus[i - parseInt(i / 2) * 2] + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>X Ekseninde</td><td>' + item.lat().toFixed(6) + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Y Ekseninde</td><td>' + item.lng().toFixed(6) + '</td>'
+                    + '</tr>'
+                    + '</table>'
+                    + '</div>'
+                    + '</div>';
+
+                var iw = new google.maps.InfoWindow({
+                    content: markerContent,
+                    maxWidth: 400
+                });
+
+                google.maps.event.addListener(mrk, 'click', function () {
+                    iw.open(window.map, mrk);
+                });
+                google.maps.event.addListener(window.map, 'click', function () {
+                    iw.close();
+                });
+
+                return mrk;
             });
 
             // Add a marker clusterer to manage the markers.
